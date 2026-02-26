@@ -249,8 +249,7 @@ export default {
 		}, INPUT_DEBOUNCE_MS)
 
 		this.onInputWrapper = (event) => {
-			const inputType = event?.inputType || ''
-			if (this.isIMEComposing || event?.isComposing || inputType.includes('Composition')) {
+			if (this.isIMEComposing || event?.isComposing) {
 				return
 			}
 			this.debounceOnInput(event)
