@@ -19,12 +19,11 @@
 			:maxlength="maxOptionLength"
 			type="text"
 			dir="auto"
-			@input="onInputWrapper"
+			@input="debounceOnInput"
 			@keydown.delete="deleteEntry"
 			@keydown.enter.prevent="focusNextInput"
 			@compositionstart="onCompositionStart"
-			@compositionupdate="onCompositionUpdate"
-		@compositionend="onCompositionEnd" />
+			@compositionend="onCompositionEnd" />
 
 		<!-- Actions for reordering and deleting the option  -->
 		<div v-if="!answer.local" class="option__actions">
@@ -247,13 +246,6 @@ export default {
 		this.debounceOnInput = debounce((event) => {
 			return this.queue.add(() => this.onInput(event))
 		}, INPUT_DEBOUNCE_MS)
-
-		this.onInputWrapper = (event) => {
-			if (this.isIMEComposing || event?.isComposing) {
-				return
-			}
-			this.debounceOnInput(event)
-		}
 	},
 
 	methods: {
@@ -432,13 +424,6 @@ export default {
 		 * Handle composition start event for IME inputs
 		 */
 		onCompositionStart() {
-			this.isIMEComposing = true
-		},
-
-		/**
-		 * Handle composition update event for IME inputs
-		 */
-		onCompositionUpdate() {
 			this.isIMEComposing = true
 		},
 
