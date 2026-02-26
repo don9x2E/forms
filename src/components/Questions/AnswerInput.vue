@@ -22,7 +22,7 @@
 			@input="debounceOnInput"
 			@keydown.delete="deleteEntry"
 			@keydown.enter.prevent="focusNextInput"
-			@compositionstart="onCompositionStart"
+			@compositionstart="onCompositionEnd"
 			@compositionend="onCompositionEnd" />
 
 		<!-- Actions for reordering and deleting the option  -->
@@ -295,10 +295,7 @@ export default {
 		/**
 		 * Request a new answer
 		 */
-		focusNextInput(e) {
-			if (this.isIMEComposing || e?.isComposing) {
-				return
-			}
+		focusNextInput() {
 			if (this.index <= this.maxIndex) {
 				this.$emit('focus-next', this.index, this.optionType)
 			}
@@ -311,10 +308,6 @@ export default {
 		 * @param {Event} e the event
 		 */
 		async deleteEntry(e) {
-			if (this.isIMEComposing || e?.isComposing) {
-				return
-			}
-
 			if (this.answer.local) {
 				return
 			}
