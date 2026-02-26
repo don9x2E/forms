@@ -258,8 +258,15 @@ export default {
 	},
 
 	methods: {
-		handleTabbing() {
+		handleTabbing(e) {
 			if (this.isIMEComposing) {
+				return
+			}
+			const active = document.activeElement
+			if (active && this.$el?.contains(active)) {
+				return
+			}
+			if (e?.relatedTarget && this.$el?.contains(e.relatedTarget)) {
 				return
 			}
 			this.$emit('tabbed-out', this.optionType)
