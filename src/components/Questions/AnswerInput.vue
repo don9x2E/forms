@@ -259,9 +259,6 @@ export default {
 
 	methods: {
 		handleTabbing() {
-			if (this.isIMEComposing) {
-				return
-			}
 			this.$emit('tabbed-out', this.optionType)
 		},
 
