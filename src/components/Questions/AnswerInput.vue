@@ -458,8 +458,11 @@ export default {
 		 *
 		 * @param {CompositionEvent} event The input event that triggered adding a new entry
 		 */
-		onCompositionEnd() {
+		onCompositionEnd({ target, isComposing }) {
 			this.isIMEComposing = false
+			if (!isComposing) {
+				this.onInput({ target, isComposing })
+			}
 		},
 	},
 }
